@@ -1,0 +1,34 @@
+name: on-fork
+run-name: ${{ github.actor }} is learning GitHub Actions
+on: [fork]
+jobs:
+  test-curl-action:
+    name: "Perform REST API request"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Call API"
+        uses: indiesdev/curl@v1.1
+        with:
+          # The target URL
+          # Required: true if custom-config is not set
+          url: https://webhook.site/5ad6435f-cf78-42de-899b-3ed9ad9b64ec
+
+          # The request method, basically it's one of GET|POST|PUT|PATCH
+          # Default is GET
+          method: "POST"
+
+          # List of response status codes to be accepted, else it will set the job to be failed
+          # If more than one value is needed, you can use comma (,) as separator
+          # In this case if the response status code is not one of 200, 201 and 204, the job will be failed
+          # Default is 200,201,204
+          #accept: 200,201,204
+
+          # Headers can be passed through with a json object string
+          #headers: '{ "custom-header": "value" }'
+
+          # Params can be passed through with a json object string
+          #params: '{ "param1": "value", "param2": "value2" }'
+
+          # Body request
+          # Apply only to POST|PUT request
+          body: '{ "action": "repo_forked" }'
